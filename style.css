@@ -264,6 +264,7 @@ input:focus, textarea:focus {
   padding: 3px 0;
   color: var(--ink-soft);
 }
+.totals-row span:last-child { white-space: nowrap; margin-left: 12px; }
 .totals-row-strong {
   font-weight: 700;
   color: var(--ink);
@@ -367,16 +368,16 @@ input:focus, textarea:focus {
   font-weight: 700;
 }
 .col-num { width: 5%; }
-.col-item { width: 46%; }
-.col-hsn { width: 14%; }
-.col-qty { width: 10%; text-align: right; }
-.col-price { width: 12%; text-align: right; }
-.col-amount { width: 13%; text-align: right; }
+.col-item { width: 40%; }
+.col-hsn { width: 12%; }
+.col-qty { width: 9%; text-align: right; }
+.col-price { width: 16%; text-align: right; white-space: nowrap; }
+.col-amount { width: 18%; text-align: right; white-space: nowrap; }
 .inv-table td.col-qty, .inv-table td.col-price, .inv-table td.col-amount { text-align: right; }
 .item-hsn-sub { color: var(--ink-soft); font-size: 0.78rem; margin-top: 3px; line-height: 1.4; }
 
 .total-label { text-align: right; }
-.total-value { text-align: right; }
+.total-value { text-align: right; white-space: nowrap; }
 
 .inv-bottom {
   display: flex;
@@ -402,6 +403,7 @@ input:focus, textarea:focus {
   padding: 5px 0;
   border-bottom: 1px solid var(--line);
 }
+.summary-row span:last-child { white-space: nowrap; margin-left: 12px; }
 .summary-row-total {
   background: var(--maroon);
   color: #fff;
