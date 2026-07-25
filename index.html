@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>Client Invoice — Rajesh S Chandan</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== TOP BAR ===================== -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="topbar-title">Invoice Maker</span>
+      <span id="statusPill" class="status-pill status-offline">Connecting…</span>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- ===================== FORM PANEL ===================== -->
+    <section class="panel form-panel" aria-label="Invoice details form">
+
+      <div class="field-group">
+        <label for="clientInput">Client</label>
+        <input list="clientList" id="clientInput" placeholder="Start typing client name…" autocomplete="off" />
+        <datalist id="clientList"></datalist>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="invoiceNo">Invoice No.</label>
+          <input type="text" id="invoiceNo" inputmode="numeric" />
+        </div>
+        <div class="field-group">
+          <label for="invoiceDate">Date</label>
+          <input type="date" id="invoiceDate" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="clientAddress">Client address <span class="optional">(optional)</span></label>
+        <textarea id="clientAddress" rows="2"></textarea>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label for="clientPhone">Client phone <span class="optional">(optional)</span></label>
+          <input type="text" id="clientPhone" />
+        </div>
+        <div class="field-group">
+          <label for="clientState">Client state <span class="optional">(optional)</span></label>
+          <input type="text" id="clientState" />
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="items-header">
+        <h2>Items</h2>
+        <button type="button" id="addItemBtn" class="btn-secondary">+ Add item</button>
+      </div>
+
+      <div id="itemsList" class="items-list"></div>
+
+      <hr class="divider" />
+
+      <div class="field-group">
+        <label for="receivedInput">Amount received <span class="optional">(optional, default ₹0)</span></label>
+        <input type="number" id="receivedInput" min="0" step="0.01" placeholder="0" />
+      </div>
+
+      <div class="totals-preview">
+        <div class="totals-row"><span>Sub Total</span><span id="previewSubTotal">₹ 0.00</span></div>
+        <div class="totals-row totals-row-strong"><span>Total</span><span id="previewTotal">₹ 0.00</span></div>
+        <div class="totals-row"><span>Received</span><span id="previewReceived">₹ 0.00</span></div>
+        <div class="totals-row"><span>Balance</span><span id="previewBalance">₹ 0.00</span></div>
+      </div>
+
+      <div class="action-row">
+        <button type="button" id="generateBtn" class="btn-primary">Generate &amp; Save Invoice</button>
+      </div>
+      <p id="formMessage" class="form-message" role="status"></p>
+
+    </section>
+
+    <!-- ===================== INVOICE PREVIEW ===================== -->
+    <section class="panel preview-panel" aria-label="Invoice preview">
+      <div class="preview-scroll">
+        <div id="invoiceSheet" class="invoice-sheet">
+
+          <div class="inv-header">
+            <div>
+              <h1 id="bizName" class="biz-name">—</h1>
+              <p id="bizAddress" class="biz-line"></p>
+              <p class="biz-line"><span id="bizPhone"></span></p>
+              <p class="biz-line"><span id="bizEmail"></span></p>
+              <p class="biz-line"><span id="bizState"></span></p>
+            </div>
+          </div>
+
+          <h2 class="inv-title">Client Invoice</h2>
+
+          <div class="inv-meta">
+            <div class="inv-meta-block">
+              <p class="inv-meta-label">Bill To</p>
+              <p id="metaClientName" class="inv-meta-value">—</p>
+            </div>
+            <div class="inv-meta-block inv-meta-right">
+              <p class="inv-meta-label">Invoice Details</p>
+              <p class="inv-meta-value">Invoice No.: <span id="metaInvoiceNo">—</span></p>
+              <p class="inv-meta-value">Date: <span id="metaInvoiceDate">—</span></p>
+            </div>
+          </div>
+
+          <table class="inv-table">
+            <thead>
+              <tr>
+                <th class="col-num">#</th>
+                <th class="col-item">Item name</th>
+                <th class="col-hsn">HSN/ SAC</th>
+                <th class="col-qty">Quantity</th>
+                <th class="col-price">Price/ unit</th>
+                <th class="col-amount">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="invTableBody"></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="total-label">Total</td>
+                <td id="totalQty" class="col-qty total-value">0</td>
+                <td></td>
+                <td id="totalAmount" class="col-amount total-value">₹ 0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <div class="inv-bottom">
+            <div class="inv-words-block">
+              <p class="inv-meta-label">Invoice Amount In Words</p>
+              <p id="amountWords" class="inv-words">—</p>
+            </div>
+            <div class="inv-summary-block">
+              <div class="summary-row"><span>Sub Total</span><span id="sumSubTotal">₹ 0.00</span></div>
+              <div class="summary-row summary-row-total"><span>Total</span><span id="sumTotal">₹ 0.00</span></div>
+              <div class="summary-row"><span>Received</span><span id="sumReceived">₹ 0.00</span></div>
+              <div class="summary-row"><span>Balance</span><span id="sumBalance">₹ 0.00</span></div>
+            </div>
+          </div>
+
+          <div class="inv-signature">
+            <div class="sig-space">
+              <img id="sigImage" class="sig-image visible" src="" alt="Authorized signature" />
+            </div>
+            <p class="sig-label">Authorized Signatory</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== ITEM ROW TEMPLATE ===================== -->
+  <template id="itemRowTemplate">
+    <div class="item-row">
+      <div class="item-row-main">
+        <input list="itemNameList" class="item-name-input" placeholder="Item name" autocomplete="off" />
+        <button type="button" class="btn-remove" aria-label="Remove item">✕</button>
+      </div>
+      <div class="item-row-fields">
+        <input type="text" class="item-hsn-input" placeholder="HSN/SAC" />
+        <input type="number" class="item-qty-input" placeholder="Qty" min="0" step="1" value="1" />
+        <input type="number" class="item-price-input" placeholder="Price/unit" min="0" step="0.01" />
+      </div>
+    </div>
+  </template>
+  <datalist id="itemNameList"></datalist>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
