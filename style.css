@@ -367,13 +367,13 @@ input:focus, textarea:focus {
   font-weight: 700;
 }
 .col-num { width: 5%; }
-.col-item { width: 38%; }
-.col-hsn { width: 22%; }
+.col-item { width: 46%; }
+.col-hsn { width: 14%; }
 .col-qty { width: 10%; text-align: right; }
 .col-price { width: 12%; text-align: right; }
 .col-amount { width: 13%; text-align: right; }
 .inv-table td.col-qty, .inv-table td.col-price, .inv-table td.col-amount { text-align: right; }
-.item-hsn-sub { color: var(--ink-soft); font-size: 0.78rem; }
+.item-hsn-sub { color: var(--ink-soft); font-size: 0.78rem; margin-top: 3px; line-height: 1.4; }
 
 .total-label { text-align: right; }
 .total-value { text-align: right; }
@@ -385,10 +385,11 @@ input:focus, textarea:focus {
   justify-content: space-between;
   margin-top: 18px;
 }
-.inv-words-block { flex: 1 1 260px; }
+.inv-words-block { flex: 1 1 280px; max-width: 340px; }
 .inv-words {
   font-size: 0.85rem;
-  max-width: 320px;
+  max-width: 300px;
+  line-height: 1.45;
 }
 .inv-summary-block {
   flex: 0 1 260px;

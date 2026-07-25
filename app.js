@@ -8,7 +8,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbw5CBURcpquWehNIZwe0E8G
 
 // Fixed business info — hardcoded here, no longer read from the Settings sheet
 const BUSINESS_INFO = {
-  BusinessName: "Rajesh S Chandan",
+  BusinessName: "Rajesh s chandan",
   Address: "T23 1st floor APMC market sect 19 vashi Navimumbai400703",
   Phone: "9820233238",
   Email: "rchandan3@gmail.com",
@@ -349,10 +349,22 @@ async function exportToPdf(clientName, invoiceNo) {
   const EXPORT_WIDTH_PX = 800;
   const originalWidth = sheet.style.width;
   const originalMaxWidth = sheet.style.maxWidth;
+  const originalPosition = sheet.style.position;
+  const originalLeft = sheet.style.left;
+  const originalMargin = sheet.style.margin;
+
+  // Take the sheet out of the parent's flex-centering (.preview-scroll uses
+  // justify-content:center) and pin it to a known x=0 offset. Without this,
+  // html2canvas's `windowWidth` override disagrees with the sheet's actual
+  // centered position in the real (wider) viewport, shifting the capture
+  // sideways in the final image/PDF.
   sheet.style.width = EXPORT_WIDTH_PX + "px";
   sheet.style.maxWidth = EXPORT_WIDTH_PX + "px";
+  sheet.style.position = "relative";
+  sheet.style.left = "0";
+  sheet.style.margin = "0";
 
-  // Let the browser apply the width change before capturing
+  // Let the browser apply the width/position change before capturing
   await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
   let canvas;
@@ -361,12 +373,19 @@ async function exportToPdf(clientName, invoiceNo) {
       scale: 2,
       backgroundColor: "#ffffff",
       windowWidth: EXPORT_WIDTH_PX,
-      width: EXPORT_WIDTH_PX
+      width: EXPORT_WIDTH_PX,
+      x: 0,
+      y: 0,
+      scrollX: 0,
+      scrollY: 0
     });
   } finally {
     // Restore the on-screen responsive layout
     sheet.style.width = originalWidth;
     sheet.style.maxWidth = originalMaxWidth;
+    sheet.style.position = originalPosition;
+    sheet.style.left = originalLeft;
+    sheet.style.margin = originalMargin;
   }
 
   const imgData = canvas.toDataURL("image/png");
