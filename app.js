@@ -8,7 +8,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbw5CBURcpquWehNIZwe0E8G
 
 // Fixed business info — hardcoded here, no longer read from the Settings sheet
 const BUSINESS_INFO = {
-  BusinessName: "Rajesh s chandan",
+  BusinessName: "Rajesh S Chandan",
   Address: "T23 1st floor APMC market sect 19 vashi Navimumbai400703",
   Phone: "9820233238",
   Email: "rchandan3@gmail.com",
