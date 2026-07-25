@@ -6,6 +6,7 @@
 // PASTE YOUR APPS SCRIPT WEB APP URL HERE (ends in /exec)
 const API_URL = "https://script.google.com/macros/s/AKfycbw5CBURcpquWehNIZwe0E8GrsTBO3AXRnG4U8pxxv5ki0_12JkXpS1-fl_2nDxAjLGC/exec";
 
+
 // Fixed business info — hardcoded here, no longer read from the Settings sheet
 const BUSINESS_INFO = {
   BusinessName: "Rajesh S Chandan",
