@@ -32,9 +32,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   el("invoiceDate").valueAsDate = new Date();
   addItemRow(); // start with one blank item row
 
+  // Business info is hardcoded and doesn't depend on the network — render it
+  // immediately so the header always shows even if the API call below fails.
+  STATE.settings = BUSINESS_INFO;
+  renderPreview();
+
   attachStaticListeners();
   await loadBootstrapData();
-  renderPreview();
 });
 
 async function loadBootstrapData() {
@@ -58,7 +62,7 @@ async function loadBootstrapData() {
   } catch (err) {
     console.error(err);
     setStatus("error");
-    showMessage("Could not connect to Google Sheets. Check API_URL in app.js and that the Apps Script is deployed.", "error");
+    showMessage("Could not connect to Google Sheets (client/item lookup won't autofill), but business info and invoice generation still work. Check API_URL in app.js and that the Apps Script is deployed.", "error");
   }
 }
 
