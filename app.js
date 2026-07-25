@@ -10,7 +10,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbw5CBURcpquWehNIZwe0E8G
 // Fixed business info — hardcoded here, no longer read from the Settings sheet
 const BUSINESS_INFO = {
   BusinessName: "Rajesh S Chandan",
-  Address: "T23 1st floor APMC market sect 19 vashi Navimumbai400703",
+  Address: "Shop No.1 Baba Homes CHS Plot No. 307 Sector 21 Seawood Nerul 400706",
   Phone: "9820233238",
   Email: "rchandan3@gmail.com",
   State: "27-Maharashtra"
